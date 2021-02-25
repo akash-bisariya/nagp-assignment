@@ -1,4 +1,4 @@
-package model;
+package com.nagpassignment.userservice.model;
 
 public class User {
 	Long userId;
@@ -12,7 +12,7 @@ public class User {
 		this.emailId = emailId;
 	}
 
-	public String getEmailId() {	
+	public String getEmailId() {
 		return emailId;
 	}
 
