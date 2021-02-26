@@ -12,18 +12,17 @@ import com.nagpassignment.provider.model.ServiceProvider;
 
 @Service
 public class ServiceProviderServiceImpl implements ServiceProviderService {
-	
-//	private Map<String, ServiceProvider> serviceProviders = new ConcurrentHashMap<String, ServiceProvider>();
+
 	List<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
 	private final AtomicLong counter = new AtomicLong(1000);
 
 	@Override
 	public ServiceProvider addServiceProvider(String name, String servicePincode, String mobile,
 			String serviceCharges) {
-		ServiceProvider provider = new ServiceProvider(counter.incrementAndGet(), name, servicePincode,mobile,serviceCharges);
-//		this.serviceProviders.put(provider.getProviderId().toString(), provider);
+		ServiceProvider provider = new ServiceProvider(counter.incrementAndGet(), name, servicePincode, mobile,
+				serviceCharges);
 		this.serviceProviders.add(provider);
-		return provider;	
+		return provider;
 	}
 
 	@Override
@@ -34,10 +33,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 	@Override
 	public List<ServiceProvider> getProviderByPinCode(String pincode) {
 		List<ServiceProvider> listOfProviders = new ArrayList<ServiceProvider>();
-		for(ServiceProvider i : this.serviceProviders) {
-			if(i.getServicePinCode().equals(pincode))
+		for (ServiceProvider i : this.serviceProviders) {
+			if (i.getServicePinCode().equals(pincode))
 				listOfProviders.add(i);
-		}	
+		}
 		return listOfProviders;
 	}
 
