@@ -20,8 +20,9 @@ public class ServiceProviderController {
 	ServiceProvider addProvider(@RequestParam(value = "name") String name,
 			@RequestParam(value = "servicePinCode") String servicePincode,
 			@RequestParam(value = "mobile") String mobile,
-			@RequestParam(value = "serviceCharges") String serviceCharges) {
-		return providerservice.addServiceProvider(name, servicePincode, mobile, serviceCharges);
+			@RequestParam(value = "serviceCharges") String serviceCharges,
+			@RequestParam(value = "services") String[] services) {
+		return providerservice.addServiceProvider(name, servicePincode, mobile, serviceCharges, services);
 	}
 
 	@GetMapping("/getallproviders")

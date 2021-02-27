@@ -18,9 +18,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 	@Override
 	public ServiceProvider addServiceProvider(String name, String servicePincode, String mobile,
-			String serviceCharges) {
+			String serviceCharges,String[] services) {
 		ServiceProvider provider = new ServiceProvider(counter.incrementAndGet(), name, servicePincode, mobile,
-				serviceCharges);
+				serviceCharges,services);
 		this.serviceProviders.add(provider);
 		return provider;
 	}

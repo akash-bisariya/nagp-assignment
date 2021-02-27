@@ -5,14 +5,19 @@ public class ServiceProvider {
 	String name;
 	String servicePinCode;
 	String mobile;
+	//per hour charges
+	String serviceCharges;
+	private String[] services;
 	
-	public ServiceProvider(Long providerId, String name, String servicePinCode, String mobile, String serviceCharges) {
+	
+	public ServiceProvider(Long providerId, String name, String servicePinCode, String mobile, String serviceCharges,String[] services) {
 		super();
 		this.providerId = providerId;
 		this.name = name;
 		this.servicePinCode = servicePinCode;
 		this.mobile = mobile;
 		this.serviceCharges = serviceCharges;
+		this.services = services;
 	}
 	public Long getProviderId() {
 		return providerId;
@@ -44,7 +49,12 @@ public class ServiceProvider {
 	public void setServiceCharges(String serviceCharges) {
 		this.serviceCharges = serviceCharges;
 	}
-	//perhour charge
-	String serviceCharges;
+	public String[] getServices() {
+		return services;
+	}
+	public void setServices(String[] services) {
+		this.services = services;
+	}
+
 
 }
