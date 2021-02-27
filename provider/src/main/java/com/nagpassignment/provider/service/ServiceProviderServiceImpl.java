@@ -27,6 +27,14 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 	@Override
 	public List<ServiceProvider> getAllServiceProvider() {
+		if (this.serviceProviders.isEmpty()) {
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Akash","110044","7651991216","100",new String[]{"2001","2002","2003"}));
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Amit","242001","8750025141","200",new String[]{"2001","2002","2003"}));
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Ankit","242001", "8745763412","150",new String[]{"2001","2002","2003"}));
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Jagdish","110044","6754614614","100",new String[]{"2004","2005","2006"}));
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Vinod","243001", "8743514314","250",new String[]{"2001","2005","2006"}));
+			this.serviceProviders.add(new ServiceProvider(counter.incrementAndGet(), "Faizaa","243001", "9876461451","100",new String[]{"2004","2006","2003"}));
+		}
 		return this.serviceProviders;
 	}
 
