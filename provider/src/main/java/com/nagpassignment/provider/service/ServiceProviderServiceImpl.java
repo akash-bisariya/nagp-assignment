@@ -2,14 +2,21 @@ package com.nagpassignment.provider.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import com.nagpassignment.provider.model.BookedService;
 import com.nagpassignment.provider.model.ServiceProvider;
 
 @Service
 public class ServiceProviderServiceImpl implements ServiceProviderService {
+	@Autowired
+	private JmsTemplate jmsTemplate;
 
 	List<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
 	private final AtomicLong counter = new AtomicLong(1000);
@@ -44,6 +51,13 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 				listOfProviders.add(i);
 		}
 		return listOfProviders;
+	}
+	 
+	
+	@JmsListener(destination="ServiceBookedEventForProvider")
+	public void ServiceBookedForProvider(String bookedService) {
+		jmsTemplate.convertAndSend("ServiceAccept",bookedService); 
+		
 	}
 
 }
