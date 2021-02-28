@@ -1,9 +1,11 @@
 package com.nagpassignment.userservice.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +13,7 @@ import com.nagpassignment.userservice.model.User;
 import com.nagpassignment.userservice.service.UserService;
 
 @RestController
+@RequestMapping(value = "/users")
 public class UserController {
 	@Autowired
 	UserService userservice;
@@ -27,7 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping("/getallusers")
-	Map<String, User> getAllUsers() {
+	List<User> getAllUsers() {
 		return userservice.getAllUsers();
 	}
 
