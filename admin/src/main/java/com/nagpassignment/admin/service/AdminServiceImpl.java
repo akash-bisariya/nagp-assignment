@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public String bookService(String userId, String serviceId, String pinCode) {
-		String url = "/getprovider/" + pinCode;
+		String url = "provider/getprovider/" + pinCode;
 		InstanceInfo instance = eurekaClient.getNextServerFromEureka("provider", false);
 		ResponseEntity<ServiceProvider[]> provider = restTemplate.getForEntity(instance.getHomePageUrl()+ url, ServiceProvider[].class);
 		List<ServiceProvider> providerList = (Arrays.asList(provider.getBody()));
@@ -72,7 +72,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Object> getAllSevices() {
 		InstanceInfo instance = eurekaClient.getNextServerFromEureka("services", false);
-		Object[] list = restTemplate.getForObject(instance.getHomePageUrl()+"/getallservices", Object[].class);
+		Object[] list = restTemplate.getForObject(instance.getHomePageUrl()+"services/getallservices", Object[].class);
 		List<Object> serviceList = Arrays.asList(list);
 		System.out.print("You are in getallservices");
 		return serviceList;
