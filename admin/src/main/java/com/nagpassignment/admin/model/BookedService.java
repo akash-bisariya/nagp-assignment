@@ -3,9 +3,19 @@ package com.nagpassignment.admin.model;
 public class BookedService {
 	private String serviceId;
 	private Long bookingId;
+	private String userId;
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	//1.Booked 2.Provider-Accepted 3. Provider-Denied 4. Completed
 	private String bookingStatus;
 	private ServiceProvider providerDetails;
+	
 	
 	public ServiceProvider getProviderDetails() {
 		return providerDetails;
@@ -15,12 +25,13 @@ public class BookedService {
 		this.providerDetails = providerDetails;
 	}
 
-	public BookedService(String serviceId,Long bookingId, String bookingStatus, ServiceProvider providerDetails) {
+	public BookedService(String serviceId,Long bookingId, String bookingStatus, ServiceProvider providerDetails,String userId) {
 		super();
 		this.serviceId = serviceId;
 		this.bookingId = bookingId;
 		this.bookingStatus = bookingStatus;
 		this.providerDetails = providerDetails;
+		this.userId=userId;
 	}
 
 	public String getServiceId() {

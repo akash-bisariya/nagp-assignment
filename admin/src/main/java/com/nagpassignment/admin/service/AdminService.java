@@ -2,11 +2,12 @@ package com.nagpassignment.admin.service;
 
 import java.util.List;
 
+import com.nagpassignment.admin.model.BookServiceRequest;
 import com.nagpassignment.admin.model.BookedService;
 
 public interface AdminService {
 	
-	String bookService(String userId,String serviceId,String pinCode);
+	String bookService(BookServiceRequest bookServiceRequest);
 	
 	List<Object> getAllSevices();
 

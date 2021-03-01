@@ -16,6 +16,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.nagpassignment.admin.model.BookServiceRequest;
 import com.nagpassignment.admin.model.BookedService;
 import com.nagpassignment.admin.model.ServiceProvider;
 import com.netflix.appinfo.InstanceInfo;
@@ -37,8 +38,8 @@ public class AdminServiceImpl implements AdminService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public String bookService(String userId, String serviceId, String pinCode) {
-		String url = "provider/getprovider/" + pinCode;
+	public String bookService(BookServiceRequest bookServiceRequest) {
+		String url = "provider/getprovider/" + bookServiceRequest.getPinCode();
 		InstanceInfo instance = eurekaClient.getNextServerFromEureka("provider", false);
 		ResponseEntity<ServiceProvider[]> provider = restTemplate.getForEntity(instance.getHomePageUrl()+ url, ServiceProvider[].class);
 		List<ServiceProvider> providerList = (Arrays.asList(provider.getBody()));
@@ -46,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
 		for (ServiceProvider i : providerList) {
 			String[] list = i.getServices();
 			for(String str : list) {
-				if(str.equals(serviceId)) {
+				if(str.equals(bookServiceRequest.getServiceId())) {
 					servingProviderList.add(i);
 				}	
 			}
@@ -59,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
 		else {
 			//Selecting first Service Provider from list
 			//Can be customized so that it can select the other if first provider reject the service
-			BookedService bookedservice = new BookedService(serviceId,bookingId.incrementAndGet(),"Booked",servingProviderList.get(0));
+			BookedService bookedservice = new BookedService(bookServiceRequest.getServiceId(),bookingId.incrementAndGet(),"Booked",servingProviderList.get(0),bookServiceRequest.getUserId());
 			bookedServices.add(bookedservice);
 			Map<String, String> map = new HashMap<>(); 
 	        map.put("serviceId", bookedservice.getBookingId().toString());
@@ -97,7 +98,7 @@ public class AdminServiceImpl implements AdminService {
 	public void ServiceNotBookedForProvider(Map<String, String> bookedService) {
 		System.out.println("Confirmed service accept");
 		/**
-		 * Status changes to Accepted when provider accept the service
+		 * Status changes to Denied when provider denied the service
 		 */
 		this.bookedServices.get(0).setBookingStatus("Provider-Denied");
 	}
