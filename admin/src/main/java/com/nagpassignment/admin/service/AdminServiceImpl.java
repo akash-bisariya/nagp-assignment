@@ -57,12 +57,14 @@ public class AdminServiceImpl implements AdminService {
 			return "No Service Provider Available Currently On Your Location.";
 		}
 		else {
-			BookedService bookedservice = new BookedService(serviceId,bookingId.incrementAndGet(),"Booked","");
+			//Selecting first Service Provider from list
+			//Can be customized so that it can select the other if first provider reject the service
+			BookedService bookedservice = new BookedService(serviceId,bookingId.incrementAndGet(),"Booked",servingProviderList.get(0));
 			bookedServices.add(bookedservice);
-			Map<String, Object> map = new HashMap<>(); 
-	        map.put("serviceId", bookedservice.getBookingId());
-	        map.put("providerId", bookedservice.getProviderId()); 
-			jmsTemplate.convertAndSend("ServiceBookedEventForProvider",bookedservice.getServiceId());
+			Map<String, String> map = new HashMap<>(); 
+	        map.put("serviceId", bookedservice.getBookingId().toString());
+	        map.put("providerId", bookedservice.getProviderDetails().getProviderId().toString()); 
+			jmsTemplate.convertAndSend("ServiceBookedEventForProvider",map);
 			return "Your Service Has Been Booked Successfully. We Will Share the Service Provider Details Shortly.";
 		}
 		
@@ -80,9 +82,24 @@ public class AdminServiceImpl implements AdminService {
 	
 
 	@JmsListener(destination="ServiceAccept")
-	public void ServiceBookedForProvider(BookedService bookedService) {
-//		jmsTemplate.convertAndSend("ServiceAccept",bookedService.getProviderId()); 
-		this.bookedServices.get(0).setBookingStatus("Confirmed");
+	public void ServiceBookedForProvider(Map<String, String> bookedService) {
+		System.out.println("Confirmed service accept");
+		/**
+		 * Status changes to Accepted when provider accept the service
+		 * Notify User or Change the Booked Sevice Status to Accepted
+		 */
+		this.bookedServices.get(0).setBookingStatus("Provider-Accepted");
+//		this.bookedServices.get(0).setProviderId(bookedService.get("providerId"));
+	}
+	
+	
+	@JmsListener(destination="ServiceDeny")
+	public void ServiceNotBookedForProvider(Map<String, String> bookedService) {
+		System.out.println("Confirmed service accept");
+		/**
+		 * Status changes to Accepted when provider accept the service
+		 */
+		this.bookedServices.get(0).setBookingStatus("Provider-Denied");
 	}
 
 	@Override

@@ -54,9 +54,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 	 
 	
 	@JmsListener(destination="ServiceBookedEventForProvider")
-	public void ServiceBookedForProvider(String bookedService) {
-		System.out.println("Getting jms template"+bookedService);
-//		jmsTemplate.convertAndSend("ServiceAccept",bookedService); 
+	public void ServiceBookedForProvider(Map<String, String> bookedService) {
+		System.out.println("Getting jms template"+bookedService.get("serviceId"));
+		
+		//For acceptance of service by provider
+		jmsTemplate.convertAndSend("ServiceAccept",bookedService); 
+		
+		//For rejection of service by provider -
+		//jmsTemplate.convertAndSend("ServiceDeny",bookedService);
+		
 
 		
 	}

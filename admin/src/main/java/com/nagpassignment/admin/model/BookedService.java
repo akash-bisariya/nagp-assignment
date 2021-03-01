@@ -3,16 +3,24 @@ package com.nagpassignment.admin.model;
 public class BookedService {
 	private String serviceId;
 	private Long bookingId;
-	//1.Booked 2.ProviderAssigned 3. Completed
+	//1.Booked 2.Provider-Accepted 3. Provider-Denied 4. Completed
 	private String bookingStatus;
-	private String providerId;
+	private ServiceProvider providerDetails;
 	
-	public BookedService(String serviceId,Long bookingId, String bookingStatus,String providerId) {
+	public ServiceProvider getProviderDetails() {
+		return providerDetails;
+	}
+
+	public void setProviderDetails(ServiceProvider providerDetails) {
+		this.providerDetails = providerDetails;
+	}
+
+	public BookedService(String serviceId,Long bookingId, String bookingStatus, ServiceProvider providerDetails) {
 		super();
 		this.serviceId = serviceId;
 		this.bookingId = bookingId;
 		this.bookingStatus = bookingStatus;
-		this.providerId = providerId;
+		this.providerDetails = providerDetails;
 	}
 
 	public String getServiceId() {
@@ -31,13 +39,6 @@ public class BookedService {
 		this.bookingStatus = bookingStatus;
 	}
 
-	public String getProviderId() {
-		return providerId;
-	}
-
-	public void setProviderId(String providerId) {
-		this.providerId = providerId;
-	}
 
 	public Long getBookingId() {
 		return bookingId;
