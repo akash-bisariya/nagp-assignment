@@ -7,7 +7,7 @@ import com.nagpassignment.services.model.ServiceModel;
 
 public interface ServiceInterface {
 
-	ServiceModel addServices(String serviceName, String serviceDescription);
+	ServiceModel addServices(ServiceModel service);
 
 	List<ServiceModel> getAllServices();
 

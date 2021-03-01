@@ -29,8 +29,8 @@ public class ServiceInterfaceImpl implements ServiceInterface {
 	}
 
 	@Override
-	public ServiceModel addServices(String serviceName, String serviceDescription) {
-		ServiceModel servicemodel = new ServiceModel(counter.incrementAndGet(), serviceName, serviceDescription);
+	public ServiceModel addServices(ServiceModel service) {
+		ServiceModel servicemodel = new ServiceModel(counter.incrementAndGet(), service.getServiceName(), service.getServiceDescription());
 		this.services.add(servicemodel);
 		return servicemodel;
 	}
