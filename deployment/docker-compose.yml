@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+    discovery-server:
+        container_name: nagp_discoveryserver
+        image: akashbisariya/nagp_discoveryserver:v1
+        ports:
+                - "9102:9102"
+        volumes:
+                - /tmp:/workspace/logs
+
+    api-gateway:
+        container_name: api-gateway
+        image: akashbisariya/nagp_apigateway_uc:v1
+        ports:
+                - "9105:9105"
+        links:
+                - discovery-server:discovery-server
+        environment:
+                - discovery_server_url=http://discovery-server:9102/eureka
+        volumes:
+                - /tmp:/workspace/logs
+    provider:
+        container_name: provider-service
+        image: akashbisariya/nagp_provider:v1
+        ports:
+                - "9101:9101"
+        links:
+            - discovery-server:discovery-server
+        environment:
+                - discovery_server_url=http://discovery-server:9102/eureka
+        volumes:
+                - /tmp:/workspace/logs
+    micro:
+        container_name: services-service
+        image: akashbisariya/nagp_services:v2
+        ports:
+                - "9103:9103"
+        links:
+            - discovery-server:discovery-server
+        environment:
+                - discovery_server_url=http://discovery-server:9102/eureka
+        volumes:
+                - /tmp:/workspace/logs
+
+    userservice:
+        container_name: userservice-service
+        image: akashbisariya/nagp_userservice:v1
+        ports:
+                - "9100:9100"
+        links:
+            - discovery-server:discovery-server
+        environment:
+                - discovery_server_url=http://discovery-server:9102/eureka
+        volumes:
+                - /tmp:/workspace/logs
+
+    admin:
+        container_name: admin-service
+        image: akashbisariya/nagp_admin:v2
+        ports:
+                - "9104:9104"
+        links:
+            - discovery-server:discovery-server
+        environment:
+                - discovery_server_url=http://discovery-server:9102/eureka
+        volumes:
+                - /tmp:/workspace/logs
