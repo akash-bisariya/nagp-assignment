@@ -22,10 +22,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 	private final AtomicLong counter = new AtomicLong(1000);
 
 	@Override
-	public ServiceProvider addServiceProvider(String name, String servicePincode, String mobile,
-			String serviceCharges,String[] services) {
-		ServiceProvider provider = new ServiceProvider(counter.incrementAndGet(), name, servicePincode, mobile,
-				serviceCharges,services);
+	public ServiceProvider addServiceProvider(ServiceProvider serviceProvider) {
+		ServiceProvider provider = new ServiceProvider(counter.incrementAndGet(), serviceProvider.getName(), serviceProvider.getServicePinCode(), serviceProvider.getMobile(),
+				serviceProvider.getServiceCharges(),serviceProvider.getServices());
 		this.serviceProviders.add(provider);
 		return provider;
 	}
@@ -56,7 +55,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 	
 	@JmsListener(destination="ServiceBookedEventForProvider")
 	public void ServiceBookedForProvider(String bookedService) {
-		jmsTemplate.convertAndSend("ServiceAccept",bookedService); 
+		System.out.println("Getting jms template"+bookedService);
+//		jmsTemplate.convertAndSend("ServiceAccept",bookedService); 
+
 		
 	}
 

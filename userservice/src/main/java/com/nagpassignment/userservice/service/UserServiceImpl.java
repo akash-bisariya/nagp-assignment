@@ -15,10 +15,10 @@ public class UserServiceImpl implements UserService {
 	private final AtomicLong counter = new AtomicLong(100);
 
 	@Override
-	public User addUser(String name, String emailId) {
-		User user = new User(counter.incrementAndGet(), name, emailId);
-		this.users.add(user);
-		return user;
+	public User addUser(User user) {
+		User userInsert = new User(counter.incrementAndGet(), user.getUserName(), user.getEmailId());
+		this.users.add(userInsert);
+		return userInsert;
 	}
 
 	@Override

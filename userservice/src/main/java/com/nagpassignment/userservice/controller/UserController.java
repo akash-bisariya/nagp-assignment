@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +25,15 @@ public class UserController {
 		return String.format("Hello %s!", name);
 	}
 
-	@GetMapping("/adduser")
-	User addUser(@RequestParam(value = "name") String name,
-			@RequestParam(value = "email", defaultValue = "test@test.com") String email) {
-		return userservice.addUser(name, email);
+//	@GetMapping("/adduser")
+//	User addUser(@RequestParam(value = "name") String name,
+//			@RequestParam(value = "email", defaultValue = "test@test.com") String email) {
+//		return userservice.addUser(name, email);
+//	}
+//	
+	@PostMapping("/adduser")
+	User addUser(@RequestBody User user) {
+		return userservice.addUser(user);
 	}
 
 	@GetMapping("/getallusers")

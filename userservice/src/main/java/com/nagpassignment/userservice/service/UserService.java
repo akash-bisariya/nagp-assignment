@@ -7,7 +7,7 @@ import com.nagpassignment.userservice.model.User;
 
 public interface UserService {
 
-	User addUser(String name, String emailId);
+	User addUser(User user);
 
 	List<User> getAllUsers();
 
